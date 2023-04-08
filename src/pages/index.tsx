@@ -23,6 +23,7 @@ export default function Home() {
                   {/* eslint-disable-next-line jsx-a11y/alt-text */}
                   <Image
                     src={"/test_img_1.png"}
+                    alt="image"
                     width={1000}
                     height={1000}
                     style={{
