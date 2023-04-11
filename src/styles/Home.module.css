@@ -1,3 +1,4 @@
+/* refactor: move layout css to it's own file */
 .RowCenter {
   width: 100%;
   display: flex;
@@ -31,12 +32,12 @@
 .MP3Section {
   display: flex;
   flex-direction: column;
-  padding: 3em 3em 2.3em 3em;
+  padding: 2.5em 2.5em 2.3em 2.5em;
   background-color: white;
   border-radius: 22px;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  width: 26em;
-  max-width: 30%;
+  width: 23em;
+  max-width: 25%;
 }
 @media (max-width: 1250px) {
   .MP3Section {
@@ -56,25 +57,20 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin-top: 2em;
+  margin-top: 1.25em;
 }
 
 .SpotifyIFrameContainer {
   width: 78%;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
-@media (max-width: 1250px) {
-  .SpotifyIFrameContainer {
-    width: 72%;
-  }
-}
 
 .MP3Skip {
-  width: 4.5em;
+  width: 3.5em;
 }
 @media (max-width: 1250px) {
   .MP3Skip {
-    width: 3.5em;
+    width: 2.5em;
   }
 }
 
@@ -85,9 +81,31 @@
 }
 
 .TextSection {
+  max-width: 28em;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  font-size: 1.25em;
+  line-height: 1.5em;
+  letter-spacing: .015em;
+}
+
+.TextSection .HeyLine {
+  display: flex;
+  flex-direction: row;
+}
+
+.HeyLine .HeyLineText {
+  font-weight: 700;
+  font-size: 1.5em;
+  letter-spacing: .04em;
+}
+
+.HeyLine .HeyLineHand {
+  margin-top: .78em;
+  margin-left: .12em;
+  font-size: 2em;
 }
 
 .MP3CoverArt {

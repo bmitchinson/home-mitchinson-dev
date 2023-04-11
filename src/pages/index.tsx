@@ -31,6 +31,8 @@ export default function Home() {
       };
       IFrameAPI.createController(element, options, callback);
     };
+    // todo: need to wait until this is loaded in before showing the site
+    // accomplish this by checking if iframe is mounted?
     loadIFrame();
   }, []);
 
@@ -69,7 +71,10 @@ export default function Home() {
               </div>
             </div>
             <div className={styles.TextSection}>
-              <p>Hey!👋🏼</p>
+              <div className={styles.HeyLine}>
+                <p className={styles.HeyLineText}>Hey!</p>
+                <span className={styles.HeyLineHand}>👋</span>
+              </div>
               <p>{"I'm currently working on"}</p>
               <ul>
                 <li>
