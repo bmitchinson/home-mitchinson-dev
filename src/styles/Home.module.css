@@ -1,5 +1,5 @@
 /* refactor: move layout css to it's own file */
-.RowCenter {
+.HoriCenter {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -29,24 +29,29 @@
   height: 100%;
 }
 
-.MP3Section {
+.MP3Container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.MP3Player {
   display: flex;
   flex-direction: column;
   padding: 2.5em 2.5em 2.3em 2.5em;
   background-color: white;
   border-radius: 22px;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  width: 23em;
-  max-width: 25%;
+  width: 25em;
 }
-@media (max-width: 1250px) {
-  .MP3Section {
+@media (max-width: 1100px) or (max-height: 630px) {
+  .MP3Player {
     padding: 2em 2em 1.8em 2em;
     width: 18em;
   }
 }
-@media (max-width: 1000px) {
-  .MP3Section {
+@media (max-width: 900px) {
+  .MP3Player {
     display: none;
   }
 }
@@ -68,7 +73,7 @@
 .MP3Skip {
   width: 3.5em;
 }
-@media (max-width: 1250px) {
+@media (max-width: 1100px) or (max-height: 630px) {
   .MP3Skip {
     width: 2.5em;
   }
@@ -81,7 +86,7 @@
 }
 
 .TextSection {
-  max-width: 28em;
+  max-width: 25em;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -89,6 +94,13 @@
   font-size: 1.25em;
   line-height: 1.5em;
   letter-spacing: .015em;
+}
+@media (max-width: 1100px) or (max-height: 630px) {
+  .TextSection {
+    width: 20em;
+    line-height: 1.4em;
+    font-size: 1.15em;
+  }
 }
 
 .TextSection .HeyLine {

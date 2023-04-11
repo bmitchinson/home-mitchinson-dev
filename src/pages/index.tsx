@@ -46,27 +46,29 @@ export default function Home() {
       </Head>
       <div className={styles.FooterStick}>
         <div className={styles.VertCenter}>
-          <div className={styles.RowCenter}>
-            <div className={styles.MP3Section}>
-              <div className={styles.MP3CoverArt}>
-                <Image
-                  src={"/test_img_1.png"}
-                  alt="image"
-                  width={1000}
-                  height={1000}
-                  style={{
-                    maxWidth: "100%",
-                    height: "auto",
-                  }}
-                ></Image>
-              </div>
-              <div className={styles.MP3Controls}>
-                <div className={styles.SpotifyIFrameContainer}>
-                  <div id="spotify-iframe"></div>
+          <div className={styles.HoriCenter}>
+            <div className={styles.MP3Container}>
+              <div className={styles.MP3Player}>
+                <div className={styles.MP3CoverArt}>
+                  <Image
+                    src={"/test_img_1.png"}
+                    alt="image"
+                    width={1000}
+                    height={1000}
+                    style={{
+                      maxWidth: "100%",
+                      height: "auto",
+                    }}
+                  ></Image>
                 </div>
-                <div className={styles.MP3Skip}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img alt="skip icon" src="/skip.svg"></img>
+                <div className={styles.MP3Controls}>
+                  <div className={styles.SpotifyIFrameContainer}>
+                    <div id="spotify-iframe"></div>
+                  </div>
+                  <div className={styles.MP3Skip}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img alt="skip icon" src="/skip.svg"></img>
+                  </div>
                 </div>
               </div>
             </div>
