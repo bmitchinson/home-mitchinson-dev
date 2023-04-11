@@ -1,11 +1,44 @@
 import Head from "next/head";
 import Image from "next/image";
+// todo: correct font + drop shadow
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
-
+import { useEffect } from "react";
 // const inter = Inter({ subsets: ["latin"] });
+
+const loadIFrame = () => {
+  const spotifyScript = document.createElement("script");
+  spotifyScript.src = "https://open.spotify.com/embed-podcast/iframe-api/v1";
+  spotifyScript.async = true;
+  spotifyScript.id = "spotify-iframe-load";
+  document.body.appendChild(spotifyScript);
+};
+
 // https://stackoverflow.com/questions/39235506/render-component-in-different-order-depending-on-screen-size-react
 export default function Home() {
+  useEffect(() => {
+    console.log("Wiring onApiReady");
+    window.onSpotifyIframeApiReady = (IFrameAPI) => {
+      console.log("On ready called");
+      window.iframeapi = IFrameAPI;
+      const element = document.getElementById("spotify-iframe");
+      const options = {
+        width: "100%",
+        height: "80",
+        uri: "spotify:track:6ck3DxsDE4Wmrhi3bTvoJ1",
+      };
+      const callback = (EmbedController) => {
+        EmbedController.addListener("playback_update", (e) => {
+          // console.log("UPDATE:", e); // e.data.isPaused
+        });
+        // wire loadUri / save reference to loadUri?
+        // EmbedController.loadUri(episode.dataset.spotifyId);
+      };
+      IFrameAPI.createController(element, options, callback);
+    };
+    loadIFrame();
+  }, []);
+
   return (
     <>
       <Head>
@@ -20,7 +53,6 @@ export default function Home() {
             <div className={styles.RowCenter}>
               <div className={styles.MP3Section}>
                 <div className={styles.MP3CoverArt}>
-                  {/* eslint-disable-next-line jsx-a11y/alt-text */}
                   <Image
                     src={"/test_img_1.png"}
                     alt="image"
@@ -31,6 +63,15 @@ export default function Home() {
                       height: "auto",
                     }}
                   ></Image>
+                </div>
+                <div className={styles.MP3Controls}>
+                  <div className={styles.SpotifyIFrameContainer}>
+                    <div id="spotify-iframe"></div>
+                  </div>
+                  <div className={styles.MP3Skip}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img alt="skip icon" src="/skip.svg"></img>
+                  </div>
                 </div>
               </div>
               <div className={styles.TextSection}>
