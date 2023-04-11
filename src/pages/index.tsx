@@ -14,7 +14,7 @@ const loadIFrame = () => {
 // https://stackoverflow.com/questions/39235506/render-component-in-different-order-depending-on-screen-size-react
 export default function Home() {
   useEffect(() => {
-    window.onSpotifyIframeApiReady = (IFrameAPI) => {
+    window.onSpotifyIframeApiReady = (IFrameAPI: any) => {
       window.iframeapi = IFrameAPI;
       const element = document.getElementById("spotify-iframe");
       const options = {
@@ -22,8 +22,8 @@ export default function Home() {
         height: "80",
         uri: "spotify:track:6ck3DxsDE4Wmrhi3bTvoJ1",
       };
-      const callback = (EmbedController) => {
-        EmbedController.addListener("playback_update", (e) => {
+      const callback = (EmbedController: any) => {
+        EmbedController.addListener("playback_update", (e: any) => {
           // console.log("UPDATE:", e); // e.data.isPaused
         });
         // wire loadUri / save reference to loadUri?
