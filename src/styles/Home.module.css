@@ -38,6 +38,17 @@
   width: 26em;
   max-width: 30%;
 }
+@media (max-width: 1250px) {
+  .MP3Section {
+    padding: 2em 2em 1.8em 2em;
+    width: 18em;
+  }
+}
+@media (max-width: 1000px) {
+  .MP3Section {
+    display: none;
+  }
+}
 
 .MP3Controls {
   display: flex;

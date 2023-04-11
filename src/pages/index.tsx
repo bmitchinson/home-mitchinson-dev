@@ -14,9 +14,7 @@ const loadIFrame = () => {
 // https://stackoverflow.com/questions/39235506/render-component-in-different-order-depending-on-screen-size-react
 export default function Home() {
   useEffect(() => {
-    console.log("Wiring onApiReady");
     window.onSpotifyIframeApiReady = (IFrameAPI) => {
-      console.log("On ready called");
       window.iframeapi = IFrameAPI;
       const element = document.getElementById("spotify-iframe");
       const options = {
