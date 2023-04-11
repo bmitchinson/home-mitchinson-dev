@@ -2,7 +2,10 @@ import "@/styles/globals.css";
 import { Montserrat } from "next/font/google";
 import type { AppProps } from "next/app";
 
-const montserrat = Montserrat({ subsets: ["latin"], weight: ["300", "700"] });
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["200", "700"],
+});
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
