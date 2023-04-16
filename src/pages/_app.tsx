@@ -4,7 +4,7 @@ import type { AppProps } from "next/app";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
-  weight: ["200", "700"],
+  weight: ["300", "700"],
 });
 
 export default function App({ Component, pageProps }: AppProps) {
