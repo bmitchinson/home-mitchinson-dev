@@ -109,6 +109,11 @@
   margin-block-end: .7em;
 }
 
+.TextSection a {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
 .TextSection .HeyLine {
   display: flex;
   flex-direction: row;
