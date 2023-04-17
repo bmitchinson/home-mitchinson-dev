@@ -1,0 +1,92 @@
+.TextSection {
+  max-width: 25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  font-size: 1.25em;
+  line-height: 1.5em;
+  letter-spacing: .015em;
+  font-weight: 300;
+  margin-left: 4vw;
+}
+@media (max-width: 68rem), (max-height: 40rem) {
+  .TextSection {
+    font-size: 1.1em;
+  }
+}
+@media (max-width: 52rem) {
+  .TextSection {
+    width: 22em;
+    max-width: 90vw;
+    font-size: 1.25em;
+    margin-left: 0;
+    justify-content: flex-start;
+    height: 100%;
+    line-height: 1.6em;
+  }
+}
+
+.TextSection p {
+  margin-block-start: .7em;
+  margin-block-end: .7em;
+}
+
+.TextSection a {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.TextSection .HeyLine {
+  display: flex;
+  flex-direction: row;
+}
+@media (max-width: 52rem) {
+  .TextSection .HeyLine {
+    margin-top: .3em;
+  }
+}
+
+.HeyLine .HeyLineText {
+  font-weight: 700;
+  font-size: 1.5em;
+  letter-spacing: .04em;
+}
+@media (max-width: 52rem) {
+  .HeyLine .HeyLineText {
+    font-size: 2em;
+  }
+}
+
+.HeyLine .HeyLineHand {
+  margin-top: .58em;
+  margin-left: .12em;
+  font-size: 2em;
+}
+@media (max-width: 52rem) {
+  .HeyLine .HeyLineHand {
+    margin-top: .6em;
+    margin-left: .15em;
+    font-size: 2.5em;
+  }
+}
+
+.Links {
+  margin-top: 1em;
+}
+@media (max-width: 52rem) {
+  .Links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.BlogPosts > li > a {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-bottom: -0.3em;
+  display: inline-block;
+  overflow: hidden;
+  width: 90%;
+}

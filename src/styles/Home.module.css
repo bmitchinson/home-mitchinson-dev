@@ -1,10 +1,12 @@
-/* refactor: move layout css to it's own file */
 .HoriCenter {
-  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  column-gap: 4vw;
+}
+@media (max-width: 52rem) {
+  .HoriCenter {
+    height: 100%;
+  }
 }
 
 .VertCenter {
@@ -27,110 +29,4 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-}
-
-.MP3Container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.MP3Player {
-  display: flex;
-  flex-direction: column;
-  padding: 2.5em 2.5em 2.3em 2.5em;
-  background-color: white;
-  border-radius: 22px;
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  width: 25em;
-}
-@media (max-width: 1100px) or (max-height: 630px) {
-  .MP3Player {
-    padding: 2em 2em 1.8em 2em;
-    width: 18em;
-  }
-}
-@media (max-width: 820px) {
-  .MP3Player {
-    display: none;
-  }
-}
-
-.MP3Controls {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 1.25em;
-}
-
-.SpotifyIFrameContainer {
-  width: 78%;
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-}
-
-.MP3Skip {
-  width: 3.5em;
-}
-@media (max-width: 1100px) or (max-height: 630px) {
-  .MP3Skip {
-    width: 2.5em;
-  }
-}
-
-.MP3Skip img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.TextSection {
-  max-width: 25em;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  font-size: 1.25em;
-  line-height: 1.5em;
-  letter-spacing: .015em;
-  font-weight: 300;
-}
-@media (max-width: 1100px) or (max-height: 630px) {
-  .TextSection {
-    width: 20em;
-    line-height: 1.4em;
-    font-size: 1.15em;
-  }
-}
-
-.TextSection p {
-  margin-block-start: .7em;
-  margin-block-end: .7em;
-}
-
-.TextSection a {
-  text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
-}
-
-.TextSection .HeyLine {
-  display: flex;
-  flex-direction: row;
-}
-
-.HeyLine .HeyLineText {
-  font-weight: 700;
-  font-size: 1.5em;
-  letter-spacing: .04em;
-}
-
-.HeyLine .HeyLineHand {
-  margin-top: .58em;
-  margin-left: .12em;
-  font-size: 2em;
-}
-
-.MP3CoverArt {
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }

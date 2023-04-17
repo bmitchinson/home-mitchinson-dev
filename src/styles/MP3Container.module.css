@@ -1,0 +1,66 @@
+.MP3Container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+@media (max-width: 52rem) {
+  .MP3Container {
+    display: none;
+  }
+}
+
+.MP3CoverArt {
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.MP3Player {
+  display: flex;
+  flex-direction: column;
+  padding: 2.5em 2.5em 2.3em 2.5em;
+  background-color: white;
+  border-radius: 22px;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  width: 25em;
+}
+@media (max-width: 68rem), (max-height: 40rem) {
+  .MP3Player {
+    padding: 2em 2em 1.8em 2em;
+    width: 18em;
+  }
+}
+
+.MP3Controls {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.25em;
+}
+
+.SpotifyIFrameContainer {
+  width: 78%;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.SpotifyLoading {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 1.4em 0em;
+}
+
+.MP3Skip {
+  width: 3.5em;
+}
+@media (max-width: 68rem), (max-height: 40rem) {
+  .MP3Skip {
+    width: 2.5em;
+  }
+}
+
+.MP3Skip img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
