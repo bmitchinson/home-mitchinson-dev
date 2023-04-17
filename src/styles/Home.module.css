@@ -27,7 +27,11 @@
   display: flex;
   justify-content: center;
   flex-shrink: 0;
-  margin-bottom: 1em;
+}
+
+.FooterEmoji {
+  font-size: 2em;
+  margin-left: .1em;
 }
 
 .FooterStick {

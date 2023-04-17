@@ -44,7 +44,11 @@ export default function Home() {
             <TextSection showMobileLayout={showMobileLayout} />
           </div>
         </div>
-        <div className={styles.Footer}>Built in Denver, CO ⛰️</div>
+        <div className={styles.Footer}>
+          <p>
+            Built in Denver, CO <span className={styles.FooterEmoji}>⛰️</span>
+          </p>
+        </div>
       </div>
     </>
   );
