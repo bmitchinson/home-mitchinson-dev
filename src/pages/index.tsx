@@ -8,13 +8,16 @@ import { useEffect, useState } from "react";
 //https://medium.com/swlh/using-window-matchmedia-for-media-queries-in-reactjs-97ddc66fca2e
 export default function Home() {
   const mobileBreakpoint = 52.01;
-  const [mQuery, setMQuery] = useState();
+  const [mQuery, setMQuery] = useState<{ matches?: boolean }>({
+    matches: undefined,
+  });
 
   useEffect(() => {
     // https://stackoverflow.com/a/42061290
-    const widthInRem =
-      window.innerWidth /
-      parseFloat(getComputedStyle(document.querySelector("body"))["font-size"]);
+    const fontSize = getComputedStyle(document.querySelector("body")!)[
+      "font-size" as any
+    ] as string;
+    const widthInRem = window.innerWidth / parseFloat(fontSize);
     setMQuery({
       matches: widthInRem > mobileBreakpoint ? true : false,
     });
