@@ -85,7 +85,7 @@
 .BlogPosts > li > a {
   white-space: nowrap;
   text-overflow: ellipsis;
-  margin-bottom: -0.3em;
+  margin-bottom: -0.5em;
   display: inline-block;
   overflow: hidden;
   width: 90%;
