@@ -10,7 +10,7 @@ export default function TextSection({ showMobileLayout = false }: props) {
       {showMobileLayout && (
         <>
           {links}
-          <div>
+          <div className={styles.Center}>
             {greetingLine}
             {mockCurrentlyWorkingOn}
             {mockBlogPosts}
