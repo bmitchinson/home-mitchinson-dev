@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 
 //https://medium.com/swlh/using-window-matchmedia-for-media-queries-in-reactjs-97ddc66fca2e
 export default function Home() {
+  const [MP3Mode, setMP3Mode] = useState(false);
+
   const mobileBreakpoint = 52.01;
   const [mQuery, setMQuery] = useState<{ matches?: boolean }>({
     matches: undefined,
@@ -29,6 +31,11 @@ export default function Home() {
   const showMobileLayout = mQuery && !mQuery.matches;
   const showDesktopLayout = !showMobileLayout;
 
+  const showMP3 = showDesktopLayout || (showMobileLayout && MP3Mode);
+  const showText = showDesktopLayout || (showMobileLayout && !MP3Mode);
+
+  const hideStyle = { display: "none" };
+
   return (
     <>
       <Head>
@@ -40,8 +47,18 @@ export default function Home() {
       <div className={styles.FooterStick}>
         <div className={styles.VertCenter}>
           <div className={styles.HoriCenter}>
-            <MP3Container />
-            <TextSection showMobileLayout={showMobileLayout} />
+            <div className={styles.HoriCenter} style={showMP3 ? {} : hideStyle}>
+              <MP3Container
+                showMobileLayout={showMobileLayout}
+                switchToText={() => setMP3Mode(false)}
+              />
+            </div>
+            <div style={showText ? {} : hideStyle}>
+              <TextSection
+                showMobileLayout={showMobileLayout}
+                switchToMP3={() => setMP3Mode(true)}
+              />
+            </div>
           </div>
         </div>
         <div className={styles.Footer}>

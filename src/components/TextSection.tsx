@@ -1,10 +1,27 @@
 import styles from "@/styles/TextSection.module.css";
+import ModeSwitchBtn from "@/components/ModeSwitchBtn";
 
 interface props {
   showMobileLayout: boolean;
+  switchToMP3: () => void;
 }
 
-export default function TextSection({ showMobileLayout = false }: props) {
+export default function TextSection({
+  showMobileLayout = false,
+  switchToMP3,
+}: props) {
+  const greetingLine = (
+    <div className={styles.HeyLine}>
+      <p className={styles.HeyLineText}>Hey!</p>
+      <span className={styles.HeyLineHand}>👋</span>
+      {showMobileLayout && (
+        <div className={styles.ModeSwitchOffset}>
+          <ModeSwitchBtn switchMode={switchToMP3} />
+        </div>
+      )}
+    </div>
+  );
+
   return (
     <div className={styles.TextSection}>
       {showMobileLayout && (
@@ -62,13 +79,6 @@ const mockBlogPosts = (
       </li>
     </ul>
   </>
-);
-
-const greetingLine = (
-  <div className={styles.HeyLine}>
-    <p className={styles.HeyLineText}>Hey!</p>
-    <span className={styles.HeyLineHand}>👋</span>
-  </div>
 );
 
 const mockCurrentlyWorkingOn = (

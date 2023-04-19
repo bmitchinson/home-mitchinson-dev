@@ -2,6 +2,7 @@ import Image from "next/image";
 import styles from "@/styles/MP3Container.module.css";
 import { useEffect, useState } from "react";
 import { ScaleLoader } from "react-spinners";
+import ModeSwitchBtn from "./ModeSwitchBtn";
 
 const loadIFrame = () => {
   const spotifyScript = document.createElement("script");
@@ -11,17 +12,27 @@ const loadIFrame = () => {
   document.body.appendChild(spotifyScript);
 };
 
-export default function MP3Container() {
+interface props {
+  switchToText: () => void;
+  showMobileLayout: boolean;
+}
+
+export default function MP3Container({
+  switchToText,
+  showMobileLayout = false,
+}: props) {
   const [spotifyLoading, setSpotifyLoading] = useState(true);
 
   useEffect(() => {
-    window.onSpotifyIframeApiReady = (IFrameAPI: any) => {
-      window.iframeapi = IFrameAPI;
-      setTimeout(() => {
-        setSpotifyLoading(false);
-      }, 1000);
-    };
-    loadIFrame();
+    if (!window.onSpotifyIframeApiReady) {
+      window.onSpotifyIframeApiReady = (IFrameAPI: any) => {
+        window.iframeapi = IFrameAPI;
+        setTimeout(() => {
+          setSpotifyLoading(false);
+        }, 1000);
+      };
+      loadIFrame();
+    }
   }, []);
 
   useEffect(() => {
@@ -79,6 +90,11 @@ export default function MP3Container() {
           )}
         </div>
       </div>
+      {showMobileLayout && (
+        <div className={styles.ModeSwitchRow}>
+          <ModeSwitchBtn switchMode={switchToText} faceBackward />
+        </div>
+      )}
     </div>
   );
 }

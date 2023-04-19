@@ -97,3 +97,8 @@
   flex-direction: column;
   justify-content: center;
 }
+
+.ModeSwitchOffset {
+  margin-left: auto;
+  margin-top: .5em;
+}
