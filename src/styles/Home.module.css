@@ -4,13 +4,11 @@
   justify-content: center;
   margin-left: -2.5%;
 }
-/* refactor: move these cut offs to CSS variables? */
 @media (max-width: 68rem), (max-height: 43rem) {
   .HoriCenter {
     margin-left: 1%;
   }
 }
-/* refactor: move mobile cut off to CSS variables? */
 @media (max-width: 52rem) {
   .HoriCenter {
     height: 100%;

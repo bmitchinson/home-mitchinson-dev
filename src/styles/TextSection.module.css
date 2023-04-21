@@ -33,9 +33,8 @@
   }
 }
 
-/* refactor: move animation time to CSS variable */
 .TextAnimateOut {
-  animation: 600ms ease-out 0s hideText;
+  animation: var(--animation-time) ease-out 0s hideText;
 }
 @keyframes hideText {
   0% {
@@ -46,6 +45,21 @@
   }
   100% {
     transform: translateX(-100vw);
+  }
+}
+
+.TextAnimateIn {
+  animation: var(--animation-time) ease-out 0s showText;
+}
+@keyframes showText {
+  0% {
+    transform: translateX(-100vw);
+  }
+  80% {
+    transform: translateX(6vw);
+  }
+  100% {
+    transform: translateX(0vw);
   }
 }
 

@@ -15,11 +15,10 @@
   }
 }
 
-/* refactor: move animation time to CSS variable */
 .MP3AnimateIn {
-  animation: 600ms ease-out 0s revealMP3;
+  animation: var(--animation-time) ease-out 0s showMP3;
 }
-@keyframes revealMP3 {
+@keyframes showMP3 {
   0% {
     transform: translateX(100vw);
   }
@@ -28,6 +27,21 @@
   }
   100% {
     transform: translateX(0);
+  }
+}
+
+.MP3AnimateOut {
+  animation: var(--animation-time) ease-out 0s hideMP3;
+}
+@keyframes hideMP3 {
+  0% {
+    transform: translateX(0vw);
+  }
+  80% {
+    transform: translateX(106vw);
+  }
+  100% {
+    transform: translateX(100vw);
   }
 }
 
