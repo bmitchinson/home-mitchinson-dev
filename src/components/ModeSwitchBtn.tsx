@@ -2,7 +2,7 @@ import styles from "@/styles/ModeSwitchBtn.module.css";
 
 interface props {
   switchMode: () => void;
-  faceBackward: boolean;
+  faceBackward?: boolean;
 }
 
 export default function ModeSwitchBtn({
