@@ -4,11 +4,13 @@ import ModeSwitchBtn from "@/components/ModeSwitchBtn";
 interface props {
   showMobileLayout: boolean;
   switchToMP3: () => void;
+  hide: boolean;
 }
 
 export default function TextSection({
-  showMobileLayout = false,
+  showMobileLayout,
   switchToMP3,
+  hide,
 }: props) {
   const greetingLine = (
     <div className={styles.HeyLine}>
@@ -23,7 +25,11 @@ export default function TextSection({
   );
 
   return (
-    <div className={styles.TextSection}>
+    <div
+      className={`${styles.TextSection} ${
+        hide ? styles.TextSectionHidden : ""
+      }`}
+    >
       {showMobileLayout && (
         <>
           {links}

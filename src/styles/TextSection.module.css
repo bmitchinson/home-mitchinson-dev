@@ -26,6 +26,13 @@
     line-height: 1.45em;
   }
 }
+@media (max-width: 52rem) {
+  .TextSectionHidden {
+    transform: translateX(-150vw);
+    position: absolute;
+  }
+}
+
 
 .TextSection p {
   margin-block-start: .7em;

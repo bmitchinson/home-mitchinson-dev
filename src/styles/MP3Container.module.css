@@ -2,6 +2,22 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  height: 100%;
+}
+@media (max-width: 52rem) {
+  .MP3ContainerHidden {
+    transform: translateX(150vw);
+    position: absolute;
+  }
+}
+
+@keyframes leftFromRight {
+  0% {
+    transform: translateX(150vw);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 
 .MP3CoverArt {

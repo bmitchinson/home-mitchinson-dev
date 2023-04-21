@@ -29,12 +29,23 @@ export default function Home() {
   }, []);
 
   const showMobileLayout = mQuery && !mQuery.matches;
-  const showDesktopLayout = !showMobileLayout;
 
-  const showMP3 = showDesktopLayout || (showMobileLayout && MP3Mode);
-  const showText = showDesktopLayout || (showMobileLayout && !MP3Mode);
+  // - no transitions for now
+  // - ensure user can't scroll to see them offscreen, no x or y scroll
+  const switchToTextMode = () => {
+    //  add `position.......` to mp3container
+    //  remove them from TextSection
+    setMP3Mode(false);
+  };
 
-  const hideStyle = { display: "none" };
+  const switchToMP3Mode = () => {
+    //  remove `position: absolute` and `transform: translateX` from mp3container
+    //  add those to TextSection (with a negative transform value)
+    setMP3Mode(true);
+  };
+
+  const hideMP3 = showMobileLayout && !MP3Mode;
+  const hideText = showMobileLayout && MP3Mode;
 
   return (
     <>
@@ -47,18 +58,20 @@ export default function Home() {
       <div className={styles.FooterStick}>
         <div className={styles.VertCenter}>
           <div className={styles.HoriCenter}>
-            <div className={styles.HoriCenter} style={showMP3 ? {} : hideStyle}>
-              <MP3Container
-                showMobileLayout={showMobileLayout}
-                switchToText={() => setMP3Mode(false)}
-              />
-            </div>
-            <div style={showText ? {} : hideStyle}>
-              <TextSection
-                showMobileLayout={showMobileLayout}
-                switchToMP3={() => setMP3Mode(true)}
-              />
-            </div>
+            {mQuery.matches != undefined && (
+              <>
+                <MP3Container
+                  showMobileLayout={showMobileLayout}
+                  switchToText={switchToTextMode}
+                  hide={hideMP3}
+                />
+                <TextSection
+                  showMobileLayout={showMobileLayout}
+                  switchToMP3={switchToMP3Mode}
+                  hide={hideText}
+                />
+              </>
+            )}
           </div>
         </div>
         <div className={styles.Footer}>
