@@ -79,6 +79,7 @@
 }
 @media (max-width: 52rem) {
   .TextSection .HeyLine {
+    /* todo: this needs some fine tuning for mobile */
     margin-top: .3em;
   }
 }
