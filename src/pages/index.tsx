@@ -7,7 +7,11 @@ import { useEffect, useState } from "react";
 
 //https://medium.com/swlh/using-window-matchmedia-for-media-queries-in-reactjs-97ddc66fca2e
 export default function Home() {
+  const animationLength = 600;
+
   const [MP3Mode, setMP3Mode] = useState(false);
+  const [animateMP3In, setAnimateMP3In] = useState(false);
+  const [animateTextOut, setAnimateTextOut] = useState(false);
 
   const mobileBreakpoint = 52.01;
   const [mQuery, setMQuery] = useState<{ matches?: boolean }>({
@@ -30,18 +34,17 @@ export default function Home() {
 
   const showMobileLayout = mQuery && !mQuery.matches;
 
-  // - no transitions for now
-  // - ensure user can't scroll to see them offscreen, no x or y scroll
-  const switchToTextMode = () => {
-    //  add `position.......` to mp3container
-    //  remove them from TextSection
-    setMP3Mode(false);
+  const switchToMP3Mode = () => {
+    setAnimateTextOut(true);
+    setAnimateMP3In(true);
+    setTimeout(() => {
+      setMP3Mode(true);
+      setAnimateMP3In(false);
+    }, animationLength);
   };
 
-  const switchToMP3Mode = () => {
-    //  remove `position: absolute` and `transform: translateX` from mp3container
-    //  add those to TextSection (with a negative transform value)
-    setMP3Mode(true);
+  const switchToTextMode = () => {
+    setMP3Mode(false);
   };
 
   const hideMP3 = showMobileLayout && !MP3Mode;
@@ -63,18 +66,23 @@ export default function Home() {
                 <MP3Container
                   showMobileLayout={showMobileLayout}
                   switchToText={switchToTextMode}
+                  animateIn={animateMP3In}
                   hide={hideMP3}
                 />
                 <TextSection
                   showMobileLayout={showMobileLayout}
                   switchToMP3={switchToMP3Mode}
                   hide={hideText}
+                  animateOut={animateTextOut}
                 />
               </>
             )}
           </div>
         </div>
+        {/* https://css-tricks.com/couple-takes-sticky-footer/ */}
         <div className={styles.Footer}>
+          {/* todo: footer shakes during mobile animation */}
+          {/* caught on chrome SE simulator */}
           <p>
             Built in Denver, CO <span className={styles.FooterEmoji}>⛰️</span>
           </p>

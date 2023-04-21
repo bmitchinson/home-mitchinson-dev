@@ -10,7 +10,7 @@
   font-weight: 300;
   margin-left: 4em;
 }
-@media (max-width: 68rem), (max-height: 40rem) {
+@media (max-width: 68rem), (max-height: 43rem) {
   .TextSection {
     font-size: 1.1em;
   }
@@ -28,8 +28,24 @@
 }
 @media (max-width: 52rem) {
   .TextSectionHidden {
-    transform: translateX(-150vw);
+    transform: translateX(-100vw);
     position: absolute;
+  }
+}
+
+/* refactor: move animation time to CSS variable */
+.TextAnimateOut {
+  animation: 600ms ease-out 0s hideText;
+}
+@keyframes hideText {
+  0% {
+    transform: translateX(0);
+  }
+  80% {
+    transform: translateX(-106vw);
+  }
+  100% {
+    transform: translateX(-100vw);
   }
 }
 

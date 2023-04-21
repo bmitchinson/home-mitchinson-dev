@@ -16,12 +16,14 @@ interface props {
   switchToText: () => void;
   showMobileLayout: boolean;
   hide: boolean;
+  animateIn: boolean;
 }
 
 export default function MP3Container({
   switchToText,
   showMobileLayout,
   hide,
+  animateIn,
 }: props) {
   const [spotifyLoading, setSpotifyLoading] = useState(true);
 
@@ -36,6 +38,10 @@ export default function MP3Container({
       loadIFrame();
     }
   }, []);
+
+  // todo: show spotify loading when animation is happening? reset after
+  // animation is done?
+  useEffect(() => {});
 
   useEffect(() => {
     if (window.iframeapi) {
@@ -59,7 +65,9 @@ export default function MP3Container({
 
   return (
     <div
-      className={`${styles.MP3Container} ${hide && styles.MP3ContainerHidden}`}
+      className={`${styles.MP3Container} ${hide && styles.MP3ContainerHidden} ${
+        animateIn && styles.MP3AnimateIn
+      }`}
     >
       <div className={styles.MP3Player}>
         <div className={styles.MP3CoverArt}>

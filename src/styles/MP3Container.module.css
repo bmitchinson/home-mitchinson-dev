@@ -5,15 +5,26 @@
   height: 100%;
 }
 @media (max-width: 52rem) {
-  .MP3ContainerHidden {
-    transform: translateX(150vw);
+  .MP3Container {
     position: absolute;
   }
 }
+@media (max-width: 52rem) {
+  .MP3ContainerHidden {
+    transform: translateX(100vw);
+  }
+}
 
-@keyframes leftFromRight {
+/* refactor: move animation time to CSS variable */
+.MP3AnimateIn {
+  animation: 600ms ease-out 0s revealMP3;
+}
+@keyframes revealMP3 {
   0% {
-    transform: translateX(150vw);
+    transform: translateX(100vw);
+  }
+  80% {
+    transform: translateX(-6vw);
   }
   100% {
     transform: translateX(0);
@@ -33,7 +44,7 @@
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   width: 25em;
 }
-@media (max-width: 68rem), (max-height: 40rem) {
+@media (max-width: 68rem), (max-height: 43rem) {
   .MP3Player {
     padding: 2em 1.4em 1.4em;
     width: 18em;
@@ -64,7 +75,7 @@
 .MP3Skip {
   width: 3.5em;
 }
-@media (max-width: 68rem), (max-height: 40rem) {
+@media (max-width: 68rem), (max-height: 43rem) {
   .MP3Skip {
     width: 2.5em;
   }

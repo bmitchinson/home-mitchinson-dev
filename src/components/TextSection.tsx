@@ -5,12 +5,14 @@ interface props {
   showMobileLayout: boolean;
   switchToMP3: () => void;
   hide: boolean;
+  animateOut: boolean;
 }
 
 export default function TextSection({
   showMobileLayout,
   switchToMP3,
   hide,
+  animateOut,
 }: props) {
   const greetingLine = (
     <div className={styles.HeyLine}>
@@ -26,9 +28,9 @@ export default function TextSection({
 
   return (
     <div
-      className={`${styles.TextSection} ${
-        hide ? styles.TextSectionHidden : ""
-      }`}
+      className={`${styles.TextSection} 
+      ${hide && styles.TextSectionHidden} 
+      ${animateOut && styles.TextAnimateOut}`}
     >
       {showMobileLayout && (
         <>
