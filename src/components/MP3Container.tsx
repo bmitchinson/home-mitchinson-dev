@@ -18,6 +18,8 @@ interface props {
   animateIn: boolean;
   animateOut: boolean;
   hide: boolean;
+  imageName: string;
+  song: string;
 }
 
 export default function MP3Container({
@@ -26,6 +28,8 @@ export default function MP3Container({
   animateIn,
   animateOut,
   hide,
+  imageName,
+  song,
 }: props) {
   const [spotifyLoading, setSpotifyLoading] = useState(true);
 
@@ -53,7 +57,8 @@ export default function MP3Container({
       const options = {
         width: "100%",
         height: "80",
-        uri: "spotify:track:6ck3DxsDE4Wmrhi3bTvoJ1",
+        // todo: this is only initial option,
+        uri: `spotify:track:${song}`,
       };
       const callback = (EmbedController: any) => {
         EmbedController.addListener("playback_update", (e: any) => {
@@ -77,7 +82,7 @@ export default function MP3Container({
       <div className={styles.MP3Player}>
         <div className={styles.MP3CoverArt}>
           <Image
-            src={"/test_img_1.png"}
+            src={`/post_imgs/${imageName}.jpg`}
             alt="image"
             width={1000}
             height={1000}

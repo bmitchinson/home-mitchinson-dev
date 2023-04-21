@@ -3,10 +3,13 @@ import Image from "next/image";
 import styles from "@/styles/Home.module.css";
 import MP3Container from "../components/MP3Container";
 import TextSection from "../components/TextSection";
+import posts from "@/posts.json";
 import { useEffect, useState } from "react";
 
 //https://medium.com/swlh/using-window-matchmedia-for-media-queries-in-reactjs-97ddc66fca2e
 export default function Home() {
+  // todo: make random
+  const postID = 1;
   const animationLength = 800;
 
   const [MP3Mode, setMP3Mode] = useState(false);
@@ -69,6 +72,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      {/* todo: need to influence background color */}
       <div className={styles.FooterStick}>
         <div className={styles.VertCenter}>
           <div className={styles.HoriCenter}>
@@ -80,6 +84,9 @@ export default function Home() {
                   animateIn={animateMP3In}
                   animateOut={animateMP3Out}
                   hide={hideMP3}
+                  // todo: include color here for loading as well
+                  song={posts[postID].song}
+                  imageName={posts[postID].image}
                 />
                 <TextSection
                   showMobileLayout={showMobileLayout}
