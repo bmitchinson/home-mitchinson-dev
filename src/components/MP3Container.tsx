@@ -15,15 +15,17 @@ const loadIFrame = () => {
 interface props {
   switchToText: () => void;
   showMobileLayout: boolean;
-  hide: boolean;
   animateIn: boolean;
+  animateOut: boolean;
+  hide: boolean;
 }
 
 export default function MP3Container({
   switchToText,
   showMobileLayout,
-  hide,
   animateIn,
+  animateOut,
+  hide,
 }: props) {
   const [spotifyLoading, setSpotifyLoading] = useState(true);
 
@@ -65,9 +67,11 @@ export default function MP3Container({
 
   return (
     <div
-      className={`${styles.MP3Container} ${hide && styles.MP3ContainerHidden} ${
-        animateIn && styles.MP3AnimateIn
-      }`}
+      className={`${styles.MP3Container} 
+      ${hide ? styles.MP3ContainerHidden : ""}
+      ${animateIn ? styles.MP3AnimateIn : ""}
+      ${animateOut ? styles.MP3AnimateOut : ""}
+      `}
     >
       <div className={styles.MP3Player}>
         <div className={styles.MP3CoverArt}>

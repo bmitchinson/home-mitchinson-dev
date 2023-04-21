@@ -11,6 +11,8 @@ export default function Home() {
 
   const [MP3Mode, setMP3Mode] = useState(false);
   const [animateMP3In, setAnimateMP3In] = useState(false);
+  const [animateMP3Out, setAnimateMP3Out] = useState(false);
+  const [animateTextIn, setAnimateTextIn] = useState(false);
   const [animateTextOut, setAnimateTextOut] = useState(false);
 
   const mobileBreakpoint = 52.01;
@@ -35,16 +37,25 @@ export default function Home() {
   const showMobileLayout = mQuery && !mQuery.matches;
 
   const switchToMP3Mode = () => {
-    setAnimateTextOut(true);
     setAnimateMP3In(true);
+    setAnimateTextOut(true);
     setTimeout(() => {
       setMP3Mode(true);
       setAnimateMP3In(false);
+      setAnimateTextOut(false);
     }, animationLength);
   };
 
   const switchToTextMode = () => {
-    setMP3Mode(false);
+    setAnimateTextIn(true);
+    setAnimateMP3Out(true);
+    setTimeout(() => {
+      // question: can set set timeout be moved out? It's essentially a cleanup?
+      // at least the animations being set to false can.
+      setMP3Mode(false);
+      setAnimateTextIn(false);
+      setAnimateMP3Out(false);
+    }, animationLength);
   };
 
   const hideMP3 = showMobileLayout && !MP3Mode;
@@ -67,13 +78,15 @@ export default function Home() {
                   showMobileLayout={showMobileLayout}
                   switchToText={switchToTextMode}
                   animateIn={animateMP3In}
+                  animateOut={animateMP3Out}
                   hide={hideMP3}
                 />
                 <TextSection
                   showMobileLayout={showMobileLayout}
                   switchToMP3={switchToMP3Mode}
-                  hide={hideText}
+                  animateIn={animateTextIn}
                   animateOut={animateTextOut}
+                  hide={hideText}
                 />
               </>
             )}
