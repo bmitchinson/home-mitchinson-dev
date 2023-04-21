@@ -43,6 +43,7 @@ export default function MP3Container({
 
   // todo: show spotify loading when animation is happening? reset after
   // animation is done?
+  // animate opacity to prevent pop in?
   useEffect(() => {});
 
   useEffect(() => {

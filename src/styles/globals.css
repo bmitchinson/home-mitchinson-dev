@@ -1,5 +1,6 @@
 :root {
-  --animation-time: 600ms;
+  --animation-time: 800ms;
+  /* matches index.tsx "animationLength" */
 }
 
 body {

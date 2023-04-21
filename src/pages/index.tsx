@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 //https://medium.com/swlh/using-window-matchmedia-for-media-queries-in-reactjs-97ddc66fca2e
 export default function Home() {
-  const animationLength = 600;
+  const animationLength = 800;
 
   const [MP3Mode, setMP3Mode] = useState(false);
   const [animateMP3In, setAnimateMP3In] = useState(false);

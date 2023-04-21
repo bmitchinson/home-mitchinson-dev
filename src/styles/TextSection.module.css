@@ -29,7 +29,6 @@
 @media (max-width: 52rem) {
   .TextSectionHidden {
     transform: translateX(-100vw);
-    position: absolute;
   }
 }
 
