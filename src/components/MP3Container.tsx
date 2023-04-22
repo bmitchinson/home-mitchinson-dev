@@ -1,17 +1,13 @@
 import Image from "next/image";
 import styles from "@/styles/MP3Container.module.css";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { ScaleLoader } from "react-spinners";
 import ModeSwitchBtn from "./ModeSwitchBtn";
 import posts from "@/posts.json";
+import { animationLength } from "../pages";
 
-const getRandomPostID = (currentID = -1) => {
-  let newID = Math.floor(Math.random() * posts.length);
-  while (currentID == newID) {
-    newID = Math.floor(Math.random() * posts.length);
-  }
-  return newID;
-};
+const getRandomPostID = () => Math.floor(Math.random() * posts.length);
+const getNextPostID = (postID) => (postID + 1) % posts.length;
 
 const loadIFrame = () => {
   const spotifyScript = document.createElement("script");
@@ -32,6 +28,9 @@ interface props {
 }
 
 // todo: fade nextjs image to next image somehow? so that it doesn't snap?
+// todo: fade out the spotify iframe on them change? snaps to loading
+// refactor: this component is getting a bit out of hand, effects condensed
+//   at least
 export default function MP3Container({
   switchToText,
   showMobileLayout,
@@ -40,6 +39,7 @@ export default function MP3Container({
   hide,
 }: props) {
   const [spotifyLoading, setSpotifyLoading] = useState(true);
+  const [embedController, setEmbedController] = useState(undefined);
   const [themeRotation, setThemeRotation] = useState(undefined);
   const [postID, setPostID] = useState(getRandomPostID());
   const imageName = posts[postID].image;
@@ -49,7 +49,13 @@ export default function MP3Container({
 
   useEffect(() => {
     document.body.style.setProperty("background-color", posts[postID].color);
-    // EmbedController.loadUri(episode.dataset.spotifyId);
+    if (embedController) {
+      embedController.loadUri(`spotify:track:${posts[postID].song}`);
+    }
+    setSpotifyLoading(true);
+    setTimeout(() => {
+      setSpotifyLoading(false);
+    }, animationLength + 300);
   }, [postID]);
 
   const stopThemeRotate = () => {
@@ -57,13 +63,15 @@ export default function MP3Container({
   };
   const startThemeRotate = () => {
     const process = setInterval(() => {
-      setPostID(getRandomPostID(postID));
+      setPostID((postID) => getNextPostID(postID));
     }, themeRotationMS);
+
     setThemeRotation(process);
     return () => {
       clearInterval(process);
     };
   };
+
   useEffect(() => startThemeRotate(), []);
 
   useEffect(() => {
@@ -79,8 +87,7 @@ export default function MP3Container({
   }, []);
 
   useEffect(() => {
-    if (window.iframeapi) {
-      // probably don't need this window assignment
+    if (window.iframeapi && !embedController) {
       const element = document.getElementById("spotify-iframe");
       const options = {
         width: "100%",
@@ -95,13 +102,20 @@ export default function MP3Container({
             stopThemeRotate();
           }
         });
+        setEmbedController(EmbedController);
       };
       window.iframeapi.createController(element, options, callback);
     }
   }, [spotifyLoading]);
 
-  // todo: trigger the spotify loader when switching to MP3mode
-  // otherwise there's an iFrame popin
+  useEffect(() => {
+    setSpotifyLoading(true);
+    setTimeout(() => {
+      setSpotifyLoading(false);
+    }, animationLength + 500);
+  }, [animateIn]);
+
+  const spotifyVisibility = spotifyLoading ? { visibility: "hidden" } : {};
 
   return (
     <div
@@ -125,26 +139,19 @@ export default function MP3Container({
           ></Image>
         </div>
         <div className={styles.MP3Controls}>
-          {spotifyLoading && (
-            <div className={styles.SpotifyLoading}>
-              <ScaleLoader
-                id="scaleloader"
-                color={posts[postID].color}
-                loading
-              />
-            </div>
-          )}
-          {!spotifyLoading && (
-            <>
-              <div className={styles.SpotifyIFrameContainer}>
-                <div id="spotify-iframe"></div>
-              </div>
-              <div className={styles.MP3Skip}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img alt="skip icon" src="/skip.svg"></img>
-              </div>
-            </>
-          )}
+          <div className={styles.SpotifyLoading}>
+            <ScaleLoader id="scaleloader" color={posts[postID].color} loading />
+          </div>
+          <div
+            className={styles.SpotifyIFrameContainer}
+            style={spotifyVisibility}
+          >
+            <div id="spotify-iframe"></div>
+          </div>
+          <div className={styles.MP3Skip}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img alt="skip icon" src="/skip.svg"></img>
+          </div>
         </div>
       </div>
       {showMobileLayout && (

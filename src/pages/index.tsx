@@ -5,12 +5,13 @@ import MP3Container from "../components/MP3Container";
 import TextSection from "../components/TextSection";
 import { useEffect, useState } from "react";
 
+export const animationLength = 800;
+
 //https://medium.com/swlh/using-window-matchmedia-for-media-queries-in-reactjs-97ddc66fca2e
 export default function Home() {
   const [MP3Mode, setMP3Mode] = useState(false);
   const [animateMP3In, setAnimateMP3In] = useState(false);
   const [animateMP3Out, setAnimateMP3Out] = useState(false);
-  const animationLength = 800;
 
   const mobileBreakpoint = 52.01;
   const [mQuery, setMQuery] = useState<{ matches?: boolean }>({
