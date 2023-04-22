@@ -6,17 +6,29 @@ import TextSection from "../components/TextSection";
 import posts from "@/posts.json";
 import { useEffect, useState } from "react";
 
+const getRandomPostID = (currentID = -1) => {
+  let newID = Math.floor(Math.random() * posts.length);
+  while (currentID == newID) {
+    newID = Math.floor(Math.random() * posts.length);
+  }
+  return newID;
+};
+
 //https://medium.com/swlh/using-window-matchmedia-for-media-queries-in-reactjs-97ddc66fca2e
 export default function Home() {
-  // todo: make random
-  const postID = 1;
-  const animationLength = 800;
+  const [postID, setPostID] = useState(getRandomPostID());
+
+  const imageRotationMS = 8000;
+  useEffect(() => {
+    setInterval(() => {
+      setPostID(getRandomPostID(postID));
+    }, imageRotationMS);
+  }, []);
 
   const [MP3Mode, setMP3Mode] = useState(false);
   const [animateMP3In, setAnimateMP3In] = useState(false);
   const [animateMP3Out, setAnimateMP3Out] = useState(false);
-  const [animateTextIn, setAnimateTextIn] = useState(false);
-  const [animateTextOut, setAnimateTextOut] = useState(false);
+  const animationLength = 800;
 
   const mobileBreakpoint = 52.01;
   const [mQuery, setMQuery] = useState<{ matches?: boolean }>({
@@ -39,24 +51,22 @@ export default function Home() {
 
   const showMobileLayout = mQuery && !mQuery.matches;
 
+  useEffect(() => {
+    document.body.style.setProperty("background-color", posts[postID].color);
+  }, [postID]);
+
   const switchToMP3Mode = () => {
     setAnimateMP3In(true);
-    setAnimateTextOut(true);
     setTimeout(() => {
       setMP3Mode(true);
       setAnimateMP3In(false);
-      setAnimateTextOut(false);
     }, animationLength);
   };
 
   const switchToTextMode = () => {
-    setAnimateTextIn(true);
     setAnimateMP3Out(true);
     setTimeout(() => {
-      // question: can set set timeout be moved out? It's essentially a cleanup?
-      // at least the animations being set to false can.
       setMP3Mode(false);
-      setAnimateTextIn(false);
       setAnimateMP3Out(false);
     }, animationLength);
   };
@@ -72,7 +82,6 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {/* todo: need to influence background color */}
       <div className={styles.FooterStick}>
         <div className={styles.VertCenter}>
           <div className={styles.HoriCenter}>
@@ -86,13 +95,15 @@ export default function Home() {
                   hide={hideMP3}
                   // todo: include color here for loading as well
                   song={posts[postID].song}
+                  // todo: fade nextjs image to next image somehow?
+                  // so that it doesn't snap?
                   imageName={posts[postID].image}
                 />
                 <TextSection
                   showMobileLayout={showMobileLayout}
                   switchToMP3={switchToMP3Mode}
-                  animateIn={animateTextIn}
-                  animateOut={animateTextOut}
+                  animateIn={animateMP3Out}
+                  animateOut={animateMP3In}
                   hide={hideText}
                 />
               </>
@@ -101,8 +112,6 @@ export default function Home() {
         </div>
         {/* https://css-tricks.com/couple-takes-sticky-footer/ */}
         <div className={styles.Footer}>
-          {/* todo: footer shakes during mobile animation */}
-          {/* caught on chrome SE simulator */}
           <p>
             Built in Denver, CO <span className={styles.FooterEmoji}>⛰️</span>
           </p>

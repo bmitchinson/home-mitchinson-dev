@@ -1,11 +1,11 @@
 :root {
   --animation-time: 800ms;
-  /* matches index.tsx "animationLength" */
+  /* needs to match index.tsx "animationLength" */
 }
 
 body {
-  background-color: #4B73BC;
   color: white;
+  transition: background-color 800ms linear;
 }
 
 a {
