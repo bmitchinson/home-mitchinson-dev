@@ -3,6 +3,15 @@ import styles from "@/styles/MP3Container.module.css";
 import { useEffect, useState } from "react";
 import { ScaleLoader } from "react-spinners";
 import ModeSwitchBtn from "./ModeSwitchBtn";
+import posts from "@/posts.json";
+
+const getRandomPostID = (currentID = -1) => {
+  let newID = Math.floor(Math.random() * posts.length);
+  while (currentID == newID) {
+    newID = Math.floor(Math.random() * posts.length);
+  }
+  return newID;
+};
 
 const loadIFrame = () => {
   const spotifyScript = document.createElement("script");
@@ -22,16 +31,40 @@ interface props {
   song: string;
 }
 
+// todo: fade nextjs image to next image somehow? so that it doesn't snap?
 export default function MP3Container({
   switchToText,
   showMobileLayout,
   animateIn,
   animateOut,
   hide,
-  imageName,
-  song,
 }: props) {
   const [spotifyLoading, setSpotifyLoading] = useState(true);
+  const [themeRotation, setThemeRotation] = useState(undefined);
+  const [postID, setPostID] = useState(getRandomPostID());
+  const imageName = posts[postID].image;
+  const song = posts[postID].song;
+
+  const themeRotationMS = 8000;
+
+  useEffect(() => {
+    document.body.style.setProperty("background-color", posts[postID].color);
+    // EmbedController.loadUri(episode.dataset.spotifyId);
+  }, [postID]);
+
+  const stopThemeRotate = () => {
+    clearInterval(themeRotation);
+  };
+  const startThemeRotate = () => {
+    const process = setInterval(() => {
+      setPostID(getRandomPostID(postID));
+    }, themeRotationMS);
+    setThemeRotation(process);
+    return () => {
+      clearInterval(process);
+    };
+  };
+  useEffect(() => startThemeRotate(), []);
 
   useEffect(() => {
     if (!window.onSpotifyIframeApiReady) {
@@ -39,16 +72,11 @@ export default function MP3Container({
         window.iframeapi = IFrameAPI;
         setTimeout(() => {
           setSpotifyLoading(false);
-        }, 1000);
+        }, 1200);
       };
       loadIFrame();
     }
   }, []);
-
-  // todo: show spotify loading when animation is happening? reset after
-  // animation is done?
-  // animate opacity to prevent pop in?
-  useEffect(() => {});
 
   useEffect(() => {
     if (window.iframeapi) {
@@ -57,19 +85,23 @@ export default function MP3Container({
       const options = {
         width: "100%",
         height: "80",
-        // todo: this is only initial option,
         uri: `spotify:track:${song}`,
       };
       const callback = (EmbedController: any) => {
         EmbedController.addListener("playback_update", (e: any) => {
-          // console.log("UPDATE:", e); // e.data.isPaused
+          if (e.data.isPaused) {
+            startThemeRotate();
+          } else if (!e.data.isPaused && themeRotation) {
+            stopThemeRotate();
+          }
         });
-        // wire loadUri / save reference to loadUri?
-        // EmbedController.loadUri(episode.dataset.spotifyId);
       };
       window.iframeapi.createController(element, options, callback);
     }
   }, [spotifyLoading]);
+
+  // todo: trigger the spotify loader when switching to MP3mode
+  // otherwise there's an iFrame popin
 
   return (
     <div
@@ -95,8 +127,11 @@ export default function MP3Container({
         <div className={styles.MP3Controls}>
           {spotifyLoading && (
             <div className={styles.SpotifyLoading}>
-              {/* todo: make color theme dependent */}
-              <ScaleLoader id="scaleloader" color="#4B73BC" loading />
+              <ScaleLoader
+                id="scaleloader"
+                color={posts[postID].color}
+                loading
+              />
             </div>
           )}
           {!spotifyLoading && (

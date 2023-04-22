@@ -3,28 +3,10 @@ import Image from "next/image";
 import styles from "@/styles/Home.module.css";
 import MP3Container from "../components/MP3Container";
 import TextSection from "../components/TextSection";
-import posts from "@/posts.json";
 import { useEffect, useState } from "react";
-
-const getRandomPostID = (currentID = -1) => {
-  let newID = Math.floor(Math.random() * posts.length);
-  while (currentID == newID) {
-    newID = Math.floor(Math.random() * posts.length);
-  }
-  return newID;
-};
 
 //https://medium.com/swlh/using-window-matchmedia-for-media-queries-in-reactjs-97ddc66fca2e
 export default function Home() {
-  const [postID, setPostID] = useState(getRandomPostID());
-
-  const imageRotationMS = 8000;
-  useEffect(() => {
-    setInterval(() => {
-      setPostID(getRandomPostID(postID));
-    }, imageRotationMS);
-  }, []);
-
   const [MP3Mode, setMP3Mode] = useState(false);
   const [animateMP3In, setAnimateMP3In] = useState(false);
   const [animateMP3Out, setAnimateMP3Out] = useState(false);
@@ -50,10 +32,6 @@ export default function Home() {
   }, []);
 
   const showMobileLayout = mQuery && !mQuery.matches;
-
-  useEffect(() => {
-    document.body.style.setProperty("background-color", posts[postID].color);
-  }, [postID]);
 
   const switchToMP3Mode = () => {
     setAnimateMP3In(true);
@@ -88,16 +66,11 @@ export default function Home() {
             {mQuery.matches != undefined && (
               <>
                 <MP3Container
-                  showMobileLayout={showMobileLayout}
                   switchToText={switchToTextMode}
+                  showMobileLayout={showMobileLayout}
                   animateIn={animateMP3In}
                   animateOut={animateMP3Out}
                   hide={hideMP3}
-                  // todo: include color here for loading as well
-                  song={posts[postID].song}
-                  // todo: fade nextjs image to next image somehow?
-                  // so that it doesn't snap?
-                  imageName={posts[postID].image}
                 />
                 <TextSection
                   showMobileLayout={showMobileLayout}
