@@ -1,13 +1,13 @@
 import Image from "next/image";
 import styles from "@/styles/MP3Container.module.css";
-import { use, useEffect, useState } from "react";
+import { CSSProperties, use, useEffect, useState } from "react";
 import { ScaleLoader } from "react-spinners";
 import ModeSwitchBtn from "./ModeSwitchBtn";
 import posts from "@/posts.json";
 import { animationLength } from "../pages";
 
 const getRandomPostID = () => Math.floor(Math.random() * posts.length);
-const getNextPostID = (postID) => (postID + 1) % posts.length;
+const getNextPostID = (postID: number) => (postID + 1) % posts.length;
 
 const loadIFrame = () => {
   const spotifyScript = document.createElement("script");
@@ -23,8 +23,6 @@ interface props {
   animateIn: boolean;
   animateOut: boolean;
   hide: boolean;
-  imageName: string;
-  song: string;
 }
 
 // todo: fade nextjs image to next image somehow? so that it doesn't snap?
@@ -39,8 +37,10 @@ export default function MP3Container({
   hide,
 }: props) {
   const [spotifyLoading, setSpotifyLoading] = useState(true);
-  const [embedController, setEmbedController] = useState(undefined);
-  const [themeRotation, setThemeRotation] = useState(undefined);
+  const [embedController, setEmbedController] = useState(undefined as any);
+  const [themeRotation, setThemeRotation] = useState<NodeJS.Timer | undefined>(
+    undefined
+  );
   const [postID, setPostID] = useState(getRandomPostID());
   const imageName = posts[postID].image;
   const song = posts[postID].song;
@@ -115,7 +115,10 @@ export default function MP3Container({
     }, animationLength + 500);
   }, [animateIn]);
 
-  const spotifyVisibility = spotifyLoading ? { visibility: "hidden" } : {};
+  const spotifyVisibility = spotifyLoading
+    ? // todo: why do I need to cast this as CSSProp. Don't need that for `flipStyle`
+      ({ visibility: "hidden" } as CSSProperties)
+    : undefined;
 
   return (
     <div
