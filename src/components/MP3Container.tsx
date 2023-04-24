@@ -5,6 +5,7 @@ import { ScaleLoader } from "react-spinners";
 import ModeSwitchBtn from "./ModeSwitchBtn";
 import posts from "@/posts.json";
 import { animationLength } from "../pages";
+import Tilt from "react-parallax-tilt";
 
 const getRandomPostID = () => Math.floor(Math.random() * posts.length);
 const getNextPostID = (postID: number) => (postID + 1) % posts.length;
@@ -127,6 +128,21 @@ export default function MP3Container({
       ({ visibility: "hidden" } as CSSProperties)
     : undefined;
 
+  const imageComp = (
+    <div className={styles.MP3CoverArt}>
+      <Image
+        src={`/post_imgs/${image}.jpg`}
+        alt="image"
+        width={1000}
+        height={1000}
+        style={{
+          maxWidth: "100%",
+          height: "auto",
+        }}
+      ></Image>
+    </div>
+  );
+
   return (
     <div
       className={`${styles.MP3Container} 
@@ -136,18 +152,12 @@ export default function MP3Container({
       `}
     >
       <div className={styles.MP3Player}>
-        <div className={styles.MP3CoverArt}>
-          <Image
-            src={`/post_imgs/${image}.jpg`}
-            alt="image"
-            width={1000}
-            height={1000}
-            style={{
-              maxWidth: "100%",
-              height: "auto",
-            }}
-          ></Image>
-        </div>
+        {showMobileLayout && imageComp}
+        {!showMobileLayout && (
+          <Tilt tiltReverse={true} tiltMaxAngleX={6} tiltMaxAngleY={6}>
+            {imageComp}
+          </Tilt>
+        )}
         <div className={styles.MP3Controls}>
           <div className={styles.SpotifyLoading}>
             <ScaleLoader id="scaleloader" color={color} loading />
