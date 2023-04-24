@@ -28,7 +28,7 @@ interface props {
 // todo: fade nextjs image to next image somehow? so that it doesn't snap?
 // todo: fade out the spotify iframe on them change? snaps to loading
 // refactor: this component is getting a bit out of hand, effects condensed
-//   at least
+//   at least. Theme context?
 export default function MP3Container({
   switchToText,
   showMobileLayout,
