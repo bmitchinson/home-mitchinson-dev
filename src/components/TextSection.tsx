@@ -22,7 +22,7 @@ export default function TextSection({
       <span className={styles.HeyLineHand}>👋</span>
       {showMobileLayout && (
         <div className={styles.ModeSwitchOffset}>
-          <ModeSwitchBtn switchMode={switchToMP3} />
+          <ModeSwitchBtn onClick={switchToMP3} />
         </div>
       )}
     </div>

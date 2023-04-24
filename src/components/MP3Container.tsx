@@ -1,6 +1,6 @@
 import Image from "next/image";
 import styles from "@/styles/MP3Container.module.css";
-import { CSSProperties, use, useEffect, useState } from "react";
+import { CSSProperties, use, useEffect, useRef, useState } from "react";
 import { ScaleLoader } from "react-spinners";
 import ModeSwitchBtn from "./ModeSwitchBtn";
 import posts from "@/posts.json";
@@ -26,7 +26,7 @@ interface props {
 }
 
 // refactor: this component is getting a bit out of hand, effects condensed
-//   at least. Theme context? How can I bring out effects.
+//   at least. Theme context? How can I clean up effects?
 export default function MP3Container({
   switchToText,
   showMobileLayout,
@@ -39,16 +39,19 @@ export default function MP3Container({
   const [themeRotation, setThemeRotation] = useState<NodeJS.Timer | undefined>(
     undefined
   );
+  // https://stackoverflow.com/a/60643670
+  const stateRef = useRef();
+  stateRef.current = themeRotation;
+
   const [postID, setPostID] = useState(getRandomPostID());
-  const imageName = posts[postID].image;
-  const song = posts[postID].song;
+  const { image, song, color } = posts[postID];
 
   const themeRotationMS = 8000;
 
   useEffect(() => {
-    document.body.style.setProperty("background-color", posts[postID].color);
+    document.body.style.setProperty("background-color", color);
     if (embedController) {
-      embedController.loadUri(`spotify:track:${posts[postID].song}`);
+      embedController.loadUri(`spotify:track:${song}`);
     }
     setSpotifyLoading(true);
     setTimeout(() => {
@@ -57,11 +60,12 @@ export default function MP3Container({
   }, [postID]);
 
   const stopThemeRotate = () => {
-    clearInterval(themeRotation);
+    clearInterval(stateRef.current);
   };
+
   const startThemeRotate = () => {
     const process = setInterval(() => {
-      setPostID((postID) => getNextPostID(postID));
+      setPostID(getNextPostID);
     }, themeRotationMS);
 
     setThemeRotation(process);
@@ -71,6 +75,11 @@ export default function MP3Container({
   };
 
   useEffect(() => startThemeRotate(), []);
+
+  const resetThemeRotate = () => {
+    stopThemeRotate();
+    startThemeRotate();
+  };
 
   useEffect(() => {
     if (!window.onSpotifyIframeApiReady) {
@@ -129,7 +138,7 @@ export default function MP3Container({
       <div className={styles.MP3Player}>
         <div className={styles.MP3CoverArt}>
           <Image
-            src={`/post_imgs/${imageName}.jpg`}
+            src={`/post_imgs/${image}.jpg`}
             alt="image"
             width={1000}
             height={1000}
@@ -141,7 +150,7 @@ export default function MP3Container({
         </div>
         <div className={styles.MP3Controls}>
           <div className={styles.SpotifyLoading}>
-            <ScaleLoader id="scaleloader" color={posts[postID].color} loading />
+            <ScaleLoader id="scaleloader" color={color} loading />
           </div>
           <div
             className={styles.SpotifyIFrameContainer}
@@ -150,14 +159,21 @@ export default function MP3Container({
             <div id="spotify-iframe"></div>
           </div>
           <div className={styles.MP3Skip}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img alt="skip icon" src="/skip.svg"></img>
+            <button
+              onClick={() => {
+                setPostID(getNextPostID);
+                resetThemeRotate();
+              }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img alt="skip icon" src="/skip.svg"></img>
+            </button>
           </div>
         </div>
       </div>
       {showMobileLayout && (
         <div className={styles.ModeSwitchRow}>
-          <ModeSwitchBtn switchMode={switchToText} faceBackward />
+          <ModeSwitchBtn onClick={switchToText} faceBackward />
         </div>
       )}
     </div>

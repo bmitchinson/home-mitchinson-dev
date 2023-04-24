@@ -1,12 +1,12 @@
 import styles from "@/styles/ModeSwitchBtn.module.css";
 
 interface props {
-  switchMode: () => void;
+  onClick: () => void;
   faceBackward?: boolean;
 }
 
 export default function ModeSwitchBtn({
-  switchMode: switchToMP3,
+  onClick: switchToMP3,
   faceBackward = false,
 }: props) {
   const flipStyle = faceBackward ? { transform: "scaleX(-1)" } : {};
