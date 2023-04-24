@@ -25,10 +25,8 @@ interface props {
   hide: boolean;
 }
 
-// todo: fade nextjs image to next image somehow? so that it doesn't snap?
-// todo: fade out the spotify iframe on them change? snaps to loading
 // refactor: this component is getting a bit out of hand, effects condensed
-//   at least. Theme context?
+//   at least. Theme context? How can I bring out effects.
 export default function MP3Container({
   switchToText,
   showMobileLayout,
@@ -116,7 +114,7 @@ export default function MP3Container({
   }, [animateIn]);
 
   const spotifyVisibility = spotifyLoading
-    ? // todo: why do I need to cast this as CSSProp. Don't need that for `flipStyle`
+    ? // why do I need to cast this as CSSProp. Don't need that for `flipStyle`
       ({ visibility: "hidden" } as CSSProperties)
     : undefined;
 
