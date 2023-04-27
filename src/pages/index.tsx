@@ -4,11 +4,49 @@ import styles from "@/styles/Home.module.css";
 import MP3Container from "../components/MP3Container";
 import TextSection from "../components/TextSection";
 import { useEffect, useState } from "react";
+import { Client } from "@notionhq/client";
 
 export const animationLength = 800;
 
+interface props {
+  posts: { title: string; url: string }[];
+}
+
+export async function getServerSideProps(): props {
+  const notion = new Client({
+    auth: "secret_REPLACE",
+  });
+  const posts = await notion.databases.query({
+    database_id: "9315f6e9736747a48431a5a3eb326c28",
+    filter: {
+      property: "status",
+      multi_select: {
+        contains: "Published",
+      },
+    },
+  });
+  console.log(
+    "posts",
+    posts.results.map((post) => ({
+      slug: post.properties.slug.rich_text[0].plain_text,
+      title: post.properties.title.title[0].plain_text,
+    }))
+  );
+
+  return {
+    props: {
+      posts: [
+        {
+          title: "testing123",
+          url: "https://blog.mitchinson.dev/testing",
+        },
+      ],
+    },
+  };
+}
+
 //https://medium.com/swlh/using-window-matchmedia-for-media-queries-in-reactjs-97ddc66fca2e
-export default function Home() {
+export default function Home({ posts }: props) {
   const [MP3Mode, setMP3Mode] = useState(false);
   const [animateMP3In, setAnimateMP3In] = useState(false);
   const [animateMP3Out, setAnimateMP3Out] = useState(false);
