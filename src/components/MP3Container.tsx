@@ -41,7 +41,7 @@ export default function MP3Container({
     undefined
   );
   // https://stackoverflow.com/a/60643670
-  const stateRef = useRef();
+  const stateRef = useRef<NodeJS.Timer | undefined>();
   stateRef.current = themeRotation;
 
   const [postID, setPostID] = useState(getRandomPostID());

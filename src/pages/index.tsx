@@ -12,7 +12,8 @@ interface props {
   posts: { title: string; url: string }[];
 }
 
-export async function getServerSideProps(): props {
+export async function getServerSideProps() {
+  // todo: pull from env
   const notion = new Client({
     auth: "secret_REPLACE",
   });
@@ -25,22 +26,16 @@ export async function getServerSideProps(): props {
       },
     },
   });
-  console.log(
-    "posts",
-    posts.results.map((post) => ({
-      slug: post.properties.slug.rich_text[0].plain_text,
-      title: post.properties.title.title[0].plain_text,
-    }))
-  );
 
   return {
     props: {
-      posts: [
-        {
-          title: "testing123",
-          url: "https://blog.mitchinson.dev/testing",
-        },
-      ],
+      posts: posts.results.map((post) => {
+        const p = post as any;
+        return {
+          slug: p.properties.slug.rich_text[0].plain_text,
+          title: p.properties.title.title[0].plain_text,
+        };
+      }),
     },
   };
 }
