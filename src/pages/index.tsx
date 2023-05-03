@@ -5,6 +5,7 @@ import MP3Container from "../components/MP3Container";
 import TextSection from "../components/TextSection";
 import { useEffect, useState } from "react";
 import { Client } from "@notionhq/client";
+import { Config } from "../utils/configuration";
 
 export const animationLength = 800;
 
@@ -15,7 +16,7 @@ interface props {
 export async function getServerSideProps() {
   // todo: pull from env
   const notion = new Client({
-    auth: "secret_REPLACE",
+    auth: Config.notionAPIKey,
   });
   const posts = await notion.databases.query({
     database_id: "9315f6e9736747a48431a5a3eb326c28",
