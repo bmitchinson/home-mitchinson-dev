@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { Client } from "@notionhq/client";
 import { Config } from "../utils/configuration";
 import { QueryDatabaseParameters } from "@notionhq/client/build/src/api-endpoints";
+import { NextPageContext } from "next";
 
 interface props {
   posts: post[];
@@ -43,7 +44,9 @@ export const animationLength = 800;
 // smell: Having this big of a function on the main page when only
 //   one component uses it seems weird. Is this what a react server
 //   component would fix? Other ways to solve it in the meantime?
-export async function getServerSideProps() {
+export async function getServerSideProps(context: NextPageContext) {
+  // const isCurl = context.req?.headers["user-agent"]?.includes("curl");
+
   const notion = new Client({
     auth: Config.notionAPIKey,
   });
