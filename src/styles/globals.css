@@ -10,12 +10,15 @@ body {
 }
 
 a {
+  transition: .5s;
   text-decoration: underline;
+  text-decoration-color: white;
   color: white;
 }
 
 a:hover {
   text-decoration: none;
+  text-decoration-color: transparent;
 }
 
 
