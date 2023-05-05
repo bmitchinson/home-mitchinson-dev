@@ -10,7 +10,7 @@ body {
 }
 
 a {
-  transition: .5s;
+  transition: text-decoration-color .5s;
   text-decoration: underline;
   text-decoration-color: white;
   color: white;
