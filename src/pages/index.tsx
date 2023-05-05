@@ -7,36 +7,54 @@ import { useEffect, useState } from "react";
 import { Client } from "@notionhq/client";
 import { Config } from "../utils/configuration";
 
+const notionPostQuery = {
+  database_id: "9315f6e9736747a48431a5a3eb326c28",
+  filter: {
+    and: [
+      {
+        property: "status",
+        select: {
+          equals: "Published",
+        },
+      },
+      {
+        property: "type",
+        select: {
+          equals: "Post",
+        },
+      },
+    ],
+  },
+  sorts: [
+    {
+      property: "date",
+      direction: "descending",
+    },
+  ],
+};
+
 export const animationLength = 800;
 
-interface props {
-  posts: { title: string; url: string }[];
-}
-
+// smell: Having this big of a function on the main page when only
+//   one component uses it seems weird. Is this what a react server
+//   component would fix? Other ways to solve it in the meantime?
 export async function getServerSideProps() {
-  // todo: pull from env
   const notion = new Client({
     auth: Config.notionAPIKey,
   });
-  const posts = await notion.databases.query({
-    database_id: "9315f6e9736747a48431a5a3eb326c28",
-    filter: {
-      property: "status",
-      multi_select: {
-        contains: "Published",
-      },
-    },
+  const posts = await notion.databases.query(notionPostQuery);
+
+  const postsSlugAndTitle = posts.results.slice(0, 5).map((post) => {
+    const p = post as any;
+    return {
+      url: `${Config.blogURL}/${p.properties.slug.rich_text[0].plain_text}`,
+      title: p.properties.title.title[0].plain_text,
+    };
   });
 
   return {
     props: {
-      posts: posts.results.map((post) => {
-        const p = post as any;
-        return {
-          slug: p.properties.slug.rich_text[0].plain_text,
-          title: p.properties.title.title[0].plain_text,
-        };
-      }),
+      posts: postsSlugAndTitle,
     },
   };
 }
@@ -113,6 +131,7 @@ export default function Home({ posts }: props) {
                   animateIn={animateMP3Out}
                   animateOut={animateMP3In}
                   hide={hideText}
+                  posts={posts}
                 />
               </>
             )}

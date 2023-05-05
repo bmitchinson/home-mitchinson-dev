@@ -26,4 +26,8 @@ export class Config {
       errorMsg: "Need to set NOTION_API_KEY in environment variables.",
     });
   }
+
+  static get blogURL() {
+    return "https://blog.mitchinson.dev";
+  }
 }

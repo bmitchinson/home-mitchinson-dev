@@ -1,12 +1,18 @@
 import styles from "@/styles/TextSection.module.css";
 import ModeSwitchBtn from "@/components/ModeSwitchBtn";
 
+interface post {
+  title: string;
+  url: string;
+}
+
 interface props {
   showMobileLayout: boolean;
   switchToMP3: () => void;
   animateIn: boolean;
   animateOut: boolean;
   hide: boolean;
+  posts: post[];
 }
 
 export default function TextSection({
@@ -15,6 +21,7 @@ export default function TextSection({
   animateIn,
   animateOut,
   hide,
+  posts,
 }: props) {
   const greetingLine = (
     <div className={styles.HeyLine}>
@@ -42,7 +49,7 @@ export default function TextSection({
           <div className={styles.Center}>
             {greetingLine}
             {mockCurrentlyWorkingOn}
-            {mockBlogPosts}
+            {blogPosts(posts)}
           </div>
         </>
       )}
@@ -50,7 +57,7 @@ export default function TextSection({
         <>
           {greetingLine}
           {mockCurrentlyWorkingOn}
-          {mockBlogPosts}
+          {blogPosts(posts)}
           {links}
         </>
       )}
@@ -66,29 +73,19 @@ const links = (
   </div>
 );
 
-const mockBlogPosts = (
+const blogPosts = (posts: post[]) => (
   <>
     <p>
       Recent Writing - <a href={"https://blog.mitchinson.dev"}>Blog</a>
     </p>
     <ul className={styles.BlogPosts}>
-      <li>
-        <a href={""}>Classes 2019</a>
-      </li>
-      <li>
-        <a href={""}>Accenture March 2021</a>
-      </li>
-      <li>
-        <a href={""}>
-          Jest: Class mocks are the cutoff text testing testing 123
-        </a>
-      </li>
-      <li>
-        <a href={""}>Classes 2020</a>
-      </li>
-      <li>
-        <a href={""}>Device Advice Year 3</a>
-      </li>
+      {posts.map((post) => {
+        return (
+          <li key={post.title}>
+            <a href={`${post.url}`}>{post.title}</a>
+          </li>
+        );
+      })}
     </ul>
   </>
 );
