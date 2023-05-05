@@ -1,0 +1,38 @@
+.HeyLineHand {
+  margin-top: .58em;
+  margin-left: .12em;
+  font-size: 2em;
+  cursor: pointer;
+}
+@media (max-width: 52rem) {
+  .HeyLineHand {
+    margin-top: .6em;
+    margin-left: .15em;
+    font-size: 2.5em;
+  }
+}
+
+.HeyLineAnimate {
+  animation: waveHand 1.5s infinite;
+}
+
+@keyframes waveHand {
+  0% {
+    transform: rotate(0deg);
+  }
+  10%{
+    transform: rotate(40deg);
+  }
+  25%{
+    transform: rotate(10deg);
+  }
+  40%{
+    transform: rotate(37deg);
+  }
+  60% {
+    transform: rotate(14deg);
+  }
+  75% {
+    transform: rotate(0deg);
+  }
+}

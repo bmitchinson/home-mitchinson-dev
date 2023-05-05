@@ -95,19 +95,6 @@
   }
 }
 
-.HeyLine .HeyLineHand {
-  margin-top: .58em;
-  margin-left: .12em;
-  font-size: 2em;
-}
-@media (max-width: 52rem) {
-  .HeyLine .HeyLineHand {
-    margin-top: .6em;
-    margin-left: .15em;
-    font-size: 2.5em;
-  }
-}
-
 .Links {
   margin-top: 1em;
 }

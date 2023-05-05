@@ -1,5 +1,6 @@
 import styles from "@/styles/TextSection.module.css";
 import ModeSwitchBtn from "@/components/ModeSwitchBtn";
+import HeyHand from "./HeyHand";
 
 export interface post {
   title: string;
@@ -26,7 +27,7 @@ export default function TextSection({
   const greetingLine = (
     <div className={styles.HeyLine}>
       <p className={styles.HeyLineText}>Hey!</p>
-      <span className={styles.HeyLineHand}>👋</span>
+      <HeyHand />
       {showMobileLayout && (
         <div className={styles.ModeSwitchOffset}>
           <ModeSwitchBtn onClick={switchToMP3} />
