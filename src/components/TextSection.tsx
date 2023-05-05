@@ -1,7 +1,7 @@
 import styles from "@/styles/TextSection.module.css";
 import ModeSwitchBtn from "@/components/ModeSwitchBtn";
 
-interface post {
+export interface post {
   title: string;
   url: string;
 }

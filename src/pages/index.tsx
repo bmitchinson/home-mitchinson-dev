@@ -2,12 +2,17 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "@/styles/Home.module.css";
 import MP3Container from "../components/MP3Container";
-import TextSection from "../components/TextSection";
+import TextSection, { post } from "../components/TextSection";
 import { useEffect, useState } from "react";
 import { Client } from "@notionhq/client";
 import { Config } from "../utils/configuration";
+import { QueryDatabaseParameters } from "@notionhq/client/build/src/api-endpoints";
 
-const notionPostQuery = {
+interface props {
+  posts: post[];
+}
+
+const notionPostQuery: QueryDatabaseParameters = {
   database_id: "9315f6e9736747a48431a5a3eb326c28",
   filter: {
     and: [
