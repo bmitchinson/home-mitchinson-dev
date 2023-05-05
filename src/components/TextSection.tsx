@@ -14,7 +14,38 @@ interface props {
   animateOut: boolean;
   hide: boolean;
   posts: post[];
+  currentWork: string[];
 }
+
+const getCurrentWorkJSX = (currentWork: string[]) => {
+  return (
+    <>
+      <p>{"I'm currently working on"}</p>
+      <ul>
+        {currentWork.map((line, i) => {
+          //gist.github.com/alordiel/ed8587044be07e408f5f93b3124836b3
+          let links = line.match(/\[.*?\)/g);
+          if (links?.length) {
+            links.forEach((link) => {
+              let txt = link.match(/\[(.*?)\]/)![1] ?? ""; //get only the txt
+              let url = link.match(/\((.*?)\)/)![1] ?? ""; //get only the link
+              line = line.replace(
+                link,
+                '<a href="' + url + '" target="_blank">' + txt + "</a>"
+              );
+            });
+          }
+          return (
+            <li
+              key={`work-${i}`}
+              dangerouslySetInnerHTML={{ __html: line }}
+            ></li>
+          );
+        })}
+      </ul>
+    </>
+  );
+};
 
 export default function TextSection({
   showMobileLayout,
@@ -23,6 +54,7 @@ export default function TextSection({
   animateOut,
   hide,
   posts,
+  currentWork,
 }: props) {
   const greetingLine = (
     <div className={styles.HeyLine}>
@@ -46,10 +78,10 @@ export default function TextSection({
     >
       {showMobileLayout && (
         <>
-          {links}
+          <div className={styles.CenterHorizontal}>{links}</div>
           <div className={styles.Center}>
             {greetingLine}
-            {mockCurrentlyWorkingOn}
+            {getCurrentWorkJSX(currentWork)}
             {blogPosts(posts)}
           </div>
         </>
@@ -57,7 +89,7 @@ export default function TextSection({
       {!showMobileLayout && (
         <>
           {greetingLine}
-          {mockCurrentlyWorkingOn}
+          {getCurrentWorkJSX(currentWork)}
           {blogPosts(posts)}
           {links}
         </>
@@ -87,16 +119,6 @@ const blogPosts = (posts: post[]) => (
           </li>
         );
       })}
-    </ul>
-  </>
-);
-
-const mockCurrentlyWorkingOn = (
-  <>
-    <p>{"I'm currently working on"}</p>
-    <ul>
-      <li>Juno, a k8s environment built with CDKTF to deploy UrbanOS</li>
-      <li>Practicing electric guitar</li>
     </ul>
   </>
 );

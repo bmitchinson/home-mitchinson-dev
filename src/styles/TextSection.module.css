@@ -17,7 +17,6 @@
 }
 @media (max-width: 52rem) {
   .TextSection {
-    width: 22em;
     max-width: 90vw;
     font-size: 1.25em;
     margin-left: 0;
@@ -100,6 +99,7 @@
 }
 @media (max-width: 52rem) {
   .Links {
+    width: 22em;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -119,6 +119,13 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+}
+
+.CenterHorizontal {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
   justify-content: center;
 }
 

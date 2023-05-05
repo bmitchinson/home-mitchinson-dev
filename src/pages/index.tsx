@@ -8,9 +8,11 @@ import { Client } from "@notionhq/client";
 import { Config } from "../utils/configuration";
 import { QueryDatabaseParameters } from "@notionhq/client/build/src/api-endpoints";
 import { NextPageContext } from "next";
+import { NotionToMarkdown } from "notion-to-md";
 
 interface props {
   posts: post[];
+  currentWork: string[];
 }
 
 const notionPostQuery: QueryDatabaseParameters = {
@@ -41,6 +43,22 @@ const notionPostQuery: QueryDatabaseParameters = {
 
 export const animationLength = 800;
 
+export const getCurrentWork = async (
+  notionClient: Client
+): Promise<string[]> => {
+  const notionMarkdownClient = new NotionToMarkdown({
+    notionClient: notionClient,
+  });
+  const blocks = await notionMarkdownClient.pageToMarkdown(
+    Config.currentWorkPageID
+  );
+  const md = notionMarkdownClient.toMarkdownString(blocks);
+  return md
+    .split("- ")
+    .splice(1)
+    .map((s) => s.trim());
+};
+
 // smell: Having this big of a function on the main page when only
 //   one component uses it seems weird. Is this what a react server
 //   component would fix? Other ways to solve it in the meantime?
@@ -50,7 +68,9 @@ export async function getServerSideProps(context: NextPageContext) {
   const notion = new Client({
     auth: Config.notionAPIKey,
   });
+
   const posts = await notion.databases.query(notionPostQuery);
+  const currentWork = await getCurrentWork(notion);
 
   const postsSlugAndTitle = posts.results.slice(0, 5).map((post) => {
     const p = post as any;
@@ -63,12 +83,13 @@ export async function getServerSideProps(context: NextPageContext) {
   return {
     props: {
       posts: postsSlugAndTitle,
+      currentWork: currentWork,
     },
   };
 }
 
 //https://medium.com/swlh/using-window-matchmedia-for-media-queries-in-reactjs-97ddc66fca2e
-export default function Home({ posts }: props) {
+export default function Home({ posts, currentWork }: props) {
   const [MP3Mode, setMP3Mode] = useState(false);
   const [animateMP3In, setAnimateMP3In] = useState(false);
   const [animateMP3Out, setAnimateMP3Out] = useState(false);
@@ -140,6 +161,7 @@ export default function Home({ posts }: props) {
                   animateOut={animateMP3In}
                   hide={hideText}
                   posts={posts}
+                  currentWork={currentWork}
                 />
               </>
             )}

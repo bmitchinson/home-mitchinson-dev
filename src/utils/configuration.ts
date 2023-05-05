@@ -30,4 +30,8 @@ export class Config {
   static get blogURL() {
     return "https://blog.mitchinson.dev";
   }
+
+  static get currentWorkPageID() {
+    return "d2e7873bf5f3417eb00746829f98ae40";
+  }
 }
