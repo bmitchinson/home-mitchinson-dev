@@ -8,12 +8,21 @@ import { Client } from "@notionhq/client";
 import { Config } from "../utils/configuration";
 import { QueryDatabaseParameters } from "@notionhq/client/build/src/api-endpoints";
 import { NextPageContext } from "next";
-import { NotionToMarkdown } from "notion-to-md";
 
 interface props {
   posts: post[];
   currentWork: string[];
 }
+
+const fetchBlock = async (blockId: string) => {
+  const options = {
+    headers: {
+      Authorization: `Bearer ${Config.notionAPIKey}`,
+      "Notion-Version": "2022-02-22",
+    },
+  };
+  return fetch(`https://api.notion.com/v1/blocks/${blockId}/children`, options);
+};
 
 const notionPostQuery: QueryDatabaseParameters = {
   database_id: "9315f6e9736747a48431a5a3eb326c28",
@@ -46,17 +55,24 @@ export const animationLength = 800;
 export const getCurrentWork = async (
   notionClient: Client
 ): Promise<string[]> => {
-  const notionMarkdownClient = new NotionToMarkdown({
-    notionClient: notionClient,
-  });
-  const blocks = await notionMarkdownClient.pageToMarkdown(
-    Config.currentWorkPageID
-  );
-  const md = notionMarkdownClient.toMarkdownString(blocks);
-  return md
-    .split("- ")
-    .splice(1)
-    .map((s) => s.trim());
+  return fetchBlock(Config.currentWorkPageID)
+    .then((res) => res.json())
+    .then((res) => {
+      return res.results
+        .filter((r: any) => r.bulleted_list_item)
+        .map((r: any) => r.bulleted_list_item.rich_text)
+        .map((r: any) => {
+          const result = r.reduce((acc: string, r: any) => {
+            if (r.href) {
+              acc += `[${r.plain_text}](${r.href})`;
+            } else {
+              acc += r.plain_text;
+            }
+            return acc;
+          }, "");
+          return result;
+        });
+    });
 };
 
 // smell: Having this big of a function on the main page when only
