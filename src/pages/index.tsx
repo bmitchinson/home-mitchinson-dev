@@ -52,6 +52,7 @@ export const getCurrentWork = async (
   const blocks = await notionMarkdownClient.pageToMarkdown(
     Config.currentWorkPageID
   );
+  console.log("blocks: ", blocks);
   const md = notionMarkdownClient.toMarkdownString(blocks);
   return md
     .split("- ")
