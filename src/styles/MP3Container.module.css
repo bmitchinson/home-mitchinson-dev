@@ -83,10 +83,15 @@
   display: flex;
   justify-content: center;
   position: absolute;
-  width: 80%;
-  margin: 1.4em 0em;
+  margin: 1.4em 0em 1.4em 12vw;
   pointer-events: none;
 }
+@media (max-width: 52rem) {
+  .SpotifyLoading {
+    margin: 1.4em 0em 1.4em 22vw;
+  }
+}
+
 
 .MP3Skip {
   width: 3.25em;
