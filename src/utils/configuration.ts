@@ -34,4 +34,12 @@ export class Config {
   static get currentWorkPageID() {
     return "d2e7873bf5f3417eb00746829f98ae40";
   }
+
+  static get postsDatabaseID() {
+    return "9315f6e9736747a48431a5a3eb326c28";
+  }
+
+  static get slugsDatabaseID() {
+    return "8e914a224f9847e183f88c15a239dfa5";
+  }
 }

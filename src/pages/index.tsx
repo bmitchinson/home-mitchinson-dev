@@ -25,7 +25,7 @@ const fetchBlock = async (blockId: string) => {
 };
 
 const notionPostQuery: QueryDatabaseParameters = {
-  database_id: "9315f6e9736747a48431a5a3eb326c28",
+  database_id: Config.postsDatabaseID,
   filter: {
     and: [
       {
