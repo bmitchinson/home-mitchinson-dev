@@ -41,8 +41,8 @@ export default function MP3Container({
     undefined
   );
   // https://stackoverflow.com/a/60643670
-  const stateRef = useRef<NodeJS.Timer | undefined>();
-  stateRef.current = themeRotation;
+  const themeRotationRef = useRef<NodeJS.Timer | undefined>();
+  themeRotationRef.current = themeRotation;
 
   const [postID, setPostID] = useState(getRandomPostID());
   const { image, song, color } = posts[postID];
@@ -61,21 +61,27 @@ export default function MP3Container({
   }, [postID]);
 
   const stopThemeRotate = () => {
-    clearInterval(stateRef.current);
+    clearInterval(themeRotationRef.current);
+    setThemeRotation(undefined);
   };
 
   const startThemeRotate = () => {
-    const process = setInterval(() => {
-      setPostID(getNextPostID);
-    }, themeRotationMS);
+    if (!themeRotationRef.current) {
+      const process = setInterval(() => {
+        setPostID(getNextPostID);
+      }, themeRotationMS);
 
-    setThemeRotation(process);
-    return () => {
-      clearInterval(process);
-    };
+      setThemeRotation(process);
+      return () => {
+        clearInterval(process);
+        setThemeRotation(undefined);
+      };
+    }
+
+    return () => {};
   };
 
-  useEffect(() => startThemeRotate(), []);
+  useEffect(startThemeRotate, []);
 
   const resetThemeRotate = () => {
     stopThemeRotate();
