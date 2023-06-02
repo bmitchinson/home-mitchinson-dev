@@ -19,6 +19,12 @@ export default function HeyHand() {
       id={"waving-hand"}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
+      onTouchStart={() => {
+        onMouseEnter();
+        setTimeout(() => {
+          onMouseLeave();
+        }, 2800);
+      }}
       className={`${styles.HeyLineHand} ${animationStyle}`}
     >
       👋
