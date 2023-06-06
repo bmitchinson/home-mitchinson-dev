@@ -154,15 +154,6 @@ export default function Home({ posts, currentWork }: props) {
   const hideText = showMobileLayout && MP3Mode;
 
   return (
-    <p>HEy</p>
-    // <>
-    //   <Head>
-    //     {url && <meta httpEquiv="Refresh" content={`0; url=${url}`} />}
-    //   </Head>
-    // </>
-  );
-
-  return (
     <>
       <Head>
         <title>Ben Mitchinson</title>
