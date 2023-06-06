@@ -33,7 +33,7 @@ export default function Redirect({ url }: { url: string }) {
   return (
     <>
       <Head>
-        {url && <meta http-equiv="Refresh" content={`0; url=${url}`} />}
+        {url && <meta httpEquiv="Refresh" content={`0; url=${url}`} />}
       </Head>
     </>
   );
