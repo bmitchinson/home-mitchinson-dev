@@ -78,9 +78,12 @@ export const getCurrentWork = async (
 // smell: Having this big of a function on the main page when only
 //   one component uses it seems weird. Is this what a react server
 //   component would fix? Other ways to solve it in the meantime?
-export async function getServerSideProps(context: NextPageContext) {
-  // const isCurl = context.req?.headers["user-agent"]?.includes("curl");
 
+// shouldn't this be co-located in the text section component? Because if it's
+//   not, the whole page won't be statically generated, right? Since the top
+//   component in the tree has getServerSideProps present?
+// https://nextjs.org/docs/pages/building-your-application/rendering/automatic-static-optimization
+export async function getServerSideProps(context: NextPageContext) {
   const notion = new Client({
     auth: Config.notionAPIKey,
   });
@@ -149,6 +152,15 @@ export default function Home({ posts, currentWork }: props) {
 
   const hideMP3 = showMobileLayout && !MP3Mode;
   const hideText = showMobileLayout && MP3Mode;
+
+  return (
+    <p>HEy</p>
+    // <>
+    //   <Head>
+    //     {url && <meta httpEquiv="Refresh" content={`0; url=${url}`} />}
+    //   </Head>
+    // </>
+  );
 
   return (
     <>
