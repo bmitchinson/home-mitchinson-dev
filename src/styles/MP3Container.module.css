@@ -84,12 +84,12 @@
   display: flex;
   justify-content: center;
   position: absolute;
-  margin: 1.4em 0em 1.4em 12vw;
+  margin: 1.4em 0em 1.4em 11rem;
   pointer-events: none;
 }
-@media (max-width: 52rem) {
+@media (max-width: 68rem), (max-height: 43rem) {
   .SpotifyLoading {
-    margin: 1.4em 0em 1.4em 22vw;
+    margin: 1.4em 0em 1.4em 7.5rem;
   }
 }
 
