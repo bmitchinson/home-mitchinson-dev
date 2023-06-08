@@ -160,6 +160,18 @@ export default function Home({ posts, currentWork }: props) {
         <meta name="description" content="Ben Mitchinson" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
+        <meta name="description" content={"Info about Ben Mitchinson"} />
+        <meta property="og:title" content={"Ben Mitchinson"} />
+        <meta property="og:description" content={"Info about Ben Mitchinson"} />
+        <meta
+          property="og:image"
+          content="https://res.cloudinary.com/dheqbiqti/image/upload/v1686186735/home.mitchinson.dev/homeogmeta.png"
+        />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:image"
+          content="https://res.cloudinary.com/dheqbiqti/image/upload/v1686186735/home.mitchinson.dev/homeogmeta.png"
+        />
       </Head>
       <div className={styles.FooterStick}>
         <div className={styles.VertCenter}>
