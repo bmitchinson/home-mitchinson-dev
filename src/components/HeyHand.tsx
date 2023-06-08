@@ -1,5 +1,5 @@
 import styles from "@/styles/HeyHand.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function HeyHand() {
   const [animating, setAnimating] = useState(false);
@@ -11,6 +11,15 @@ export default function HeyHand() {
   const onMouseLeave = () => {
     setAnimating(false);
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setAnimating(true);
+    }, 1500);
+    setTimeout(() => {
+      setAnimating(false);
+    }, 4300);
+  }, []);
 
   const animationStyle = animating ? styles.HeyLineAnimate : "";
 
