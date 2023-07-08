@@ -83,7 +83,7 @@ export const getCurrentWork = async (
 //   not, the whole page won't be statically generated, right? Since the top
 //   component in the tree has getServerSideProps present?
 // https://nextjs.org/docs/pages/building-your-application/rendering/automatic-static-optimization
-export async function getServerSideProps(context: NextPageContext) {
+export async function getStaticProps(context: NextPageContext) {
   const notion = new Client({
     auth: Config.notionAPIKey,
   });
@@ -104,6 +104,7 @@ export async function getServerSideProps(context: NextPageContext) {
       posts: postsSlugAndTitle,
       currentWork: currentWork,
     },
+    revalidate: false, // regenerate props when /api/revalidate?revalidate_pass={secret} is called
   };
 }
 
