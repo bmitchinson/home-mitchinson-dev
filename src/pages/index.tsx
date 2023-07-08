@@ -79,10 +79,6 @@ export const getCurrentWork = async (
 //   one component uses it seems weird. Is this what a react server
 //   component would fix? Other ways to solve it in the meantime?
 
-// shouldn't this be co-located in the text section component? Because if it's
-//   not, the whole page won't be statically generated, right? Since the top
-//   component in the tree has getServerSideProps present?
-// https://nextjs.org/docs/pages/building-your-application/rendering/automatic-static-optimization
 export async function getStaticProps(context: NextPageContext) {
   const notion = new Client({
     auth: Config.notionAPIKey,
