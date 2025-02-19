@@ -100,9 +100,9 @@ export default function TextSection({
 
 const links = (
   <div className={styles.Links}>
-    <a href={"/github"}>Github</a> - <a href={"/twitter"}>Twitter</a>
+    <a href={"/github"}>Github</a> - <a href={"/linkedin"}>LinkedIn</a>
     {" - "}
-    <a href={"/resume"}>Resume</a> - <a href={"/spotify"}>Spotify</a>
+    <a href={"/resume"}>Resume</a>
   </div>
 );
 
